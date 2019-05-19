@@ -1,5 +1,6 @@
 const gulp = require('gulp');
 const concat = require('gulp-concat');
+const sass = require('gulp-sass');
 
 // ***********************
 // Move JS Files to src/js
@@ -86,4 +87,19 @@ gulp.task('css', function () {
         .pipe(gulp.dest('src/css'))
 })
 
-gulp.task('default', ['js', 'scripts', 'css', 'fafonts', 'elefonts']);
+gulp.task('scss', function() {
+  return gulp.src([
+    'scss/style.scss',
+  ])
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./css'))
+})
+
+gulp.task('scss:watch', function() {
+  return gulp.watch([
+    'scss/**/*',
+    'scss/*'
+  ], ['scss'])
+})
+
+gulp.task('default', ['js', 'scripts', 'css', 'scss', 'fafonts', 'elefonts']);
